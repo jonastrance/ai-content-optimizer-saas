@@ -1,0 +1,43 @@
+{
+  "name": "ai-content-optimizer-saas",
+  "version": "1.0.0",
+  "description": "AI-powered content optimization platform for SEO and marketing teams",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "postinstall": "prisma generate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@stripe/stripe-js": "^8.6.0",
+    "@tailwindcss/postcss": "^4.1.18",
+    "@types/node": "^25.0.3",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "autoprefixer": "^10.4.23",
+    "bcryptjs": "^3.0.3",
+    "eslint": "^9.39.2",
+    "eslint-config-next": "^16.1.1",
+    "lucide-react": "^0.562.0",
+    "next": "^16.1.1",
+    "next-auth": "^5.0.0-beta.30",
+    "openai": "^6.15.0",
+    "postcss": "^8.5.6",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "react-hook-form": "^7.69.0",
+    "stripe": "^20.1.0",
+    "tailwindcss": "^4.1.18",
+    "typescript": "^5.9.3",
+    "zod": "^4.2.1"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "prisma": "^7.2.0"
+  }
+}
