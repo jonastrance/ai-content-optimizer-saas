@@ -82,7 +82,7 @@ function countWords(text: string): number {
   return text.trim().split(/\s+/).filter(word => word.length > 0).length;
 }
 
-function calculateReadabilityScore(text: string): number {
+export function calculateReadabilityScore(text: string): number {
   // Simplified Flesch Reading Ease score
   const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0).length;
   const words = countWords(text);
