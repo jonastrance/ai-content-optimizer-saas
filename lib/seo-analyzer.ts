@@ -12,7 +12,7 @@ export interface SEOAnalysis {
 
 export function analyzeSEO(content: string, targetKeyword?: string): SEOAnalysis {
   const wordCount = countWords(content);
-  const readabilityScore = calculateReadabilityScore(content);
+  const readabilityScore = calculateReadabilityScore(content, wordCount);
   const keywordDensity = targetKeyword ? calculateKeywordDensity(content, targetKeyword) : 0;
   
   const suggestions: string[] = [];
@@ -82,10 +82,10 @@ function countWords(text: string): number {
   return text.trim().split(/\s+/).filter(word => word.length > 0).length;
 }
 
-function calculateReadabilityScore(text: string): number {
+function calculateReadabilityScore(text: string, wordCount: number): number {
   // Simplified Flesch Reading Ease score
   const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0).length;
-  const words = countWords(text);
+  const words = wordCount;
   const syllables = estimateSyllables(text);
 
   if (sentences === 0 || words === 0) return 0;
