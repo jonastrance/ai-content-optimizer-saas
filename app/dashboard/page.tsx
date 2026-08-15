@@ -71,16 +71,15 @@ export default function DashboardPage() {
     }
   };
 
-  const getScoreColor = (score: number) => {
+  const getScoreColor = (score: number, type: 'text' | 'bg' = 'text') => {
+    if (type === 'bg') {
+      if (score >= 80) return 'bg-green-100';
+      if (score >= 60) return 'bg-yellow-100';
+      return 'bg-red-100';
+    }
     if (score >= 80) return 'text-green-600';
     if (score >= 60) return 'text-yellow-600';
     return 'text-red-600';
-  };
-
-  const getScoreBgColor = (score: number) => {
-    if (score >= 80) return 'bg-green-100';
-    if (score >= 60) return 'bg-yellow-100';
-    return 'bg-red-100';
   };
 
   return (
