@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { 
   Sparkles, 
@@ -37,6 +37,10 @@ export default function DashboardPage() {
   const [analysis, setAnalysis] = useState<AnalysisResult | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const wordCount = useMemo(() => {
+    return (content.match(/\S+/g) || []).length;
+  }, [content]);
 
   const handleAnalyze = async () => {
     if (!content.trim()) {
@@ -183,7 +187,7 @@ export default function DashboardPage() {
                   Your Content
                 </label>
                 <span className="text-sm text-gray-500">
-                  {content.trim().split(/\s+/).filter(w => w.length > 0).length} words
+                  {wordCount} words
                 </span>
               </div>
               <textarea
