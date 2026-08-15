@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { analyzeSEO } from '@/lib/seo-analyzer';
 import { getAIContentSuggestions } from '@/lib/openai-service';
 
+const MAX_CONTENT_LENGTH = 50000;
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -10,6 +12,13 @@ export async function POST(request: NextRequest) {
     if (!content || typeof content !== 'string') {
       return NextResponse.json(
         { error: 'Content is required and must be a string' },
+        { status: 400 }
+      );
+    }
+
+    if (content.length > MAX_CONTENT_LENGTH) {
+      return NextResponse.json(
+        { error: `Content exceeds the maximum allowed length of ${MAX_CONTENT_LENGTH} characters` },
         { status: 400 }
       );
     }
