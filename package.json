@@ -4,6 +4,8 @@
   "description": "AI-powered content optimization platform for SEO and marketing teams",
   "main": "index.js",
   "scripts": {
+    "test": "vitest",
+    "test:coverage": "vitest run --coverage",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -38,6 +40,9 @@
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
-    "prisma": "^7.2.0"
+    "@vitest/coverage-v8": "^4.1.11",
+    "prisma": "^7.2.0",
+    "vite-tsconfig-paths": "^6.1.1",
+    "vitest": "^4.1.11"
   }
 }
