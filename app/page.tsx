@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { 
   Sparkles, 
-  TrendingUp, 
   Target, 
   Zap, 
   CheckCircle, 
