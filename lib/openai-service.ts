@@ -86,39 +86,3 @@ Focus on:
   }
 }
 
-export async function generateContentImprovement(
-  originalContent: string,
-  suggestion: string
-): Promise<string> {
-  try {
-    const prompt = `Given this content and suggestion, provide an improved version of a specific section:
-
-Original Content:
-${originalContent.substring(0, 2000)}
-
-Suggestion: ${suggestion}
-
-Provide ONLY the improved text snippet that addresses this suggestion. Keep it concise and focused.`;
-
-    const response = await openai.chat.completions.create({
-      model: 'gpt-4o-mini',
-      messages: [
-        {
-          role: 'system',
-          content: 'You are a professional content editor. Provide improved content that is SEO-optimized and reader-friendly.',
-        },
-        {
-          role: 'user',
-          content: prompt,
-        },
-      ],
-      temperature: 0.7,
-      max_tokens: 500,
-    });
-
-    return response.choices[0].message.content || 'Unable to generate improvement';
-  } catch (error) {
-    console.error('Error generating content improvement:', error);
-    return 'Unable to generate improvement at this time';
-  }
-}
