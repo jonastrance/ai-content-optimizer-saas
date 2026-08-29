@@ -1,4 +1,5 @@
 // SEO Scoring utilities
+import { syllable } from 'syllable';
 
 export interface SEOAnalysis {
   seoScore: number;
@@ -110,18 +111,7 @@ function estimateSyllables(text: string): number {
 }
 
 function countSyllablesInWord(word: string): number {
-  word = word.toLowerCase().replace(/[^a-z]/g, '');
-  if (word.length <= 3) return 1;
-
-  const vowels = word.match(/[aeiouy]+/g);
-  if (!vowels) return 1;
-
-  let count = vowels.length;
-  
-  // Subtract silent e
-  if (word.endsWith('e')) count--;
-  
-  return Math.max(1, count);
+  return syllable(word);
 }
 
 function calculateKeywordDensity(content: string, keyword: string): number {
