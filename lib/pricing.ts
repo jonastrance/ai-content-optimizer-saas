@@ -62,8 +62,3 @@ export const pricingPlans: PricingPlan[] = [
 export function getPlanById(planId: string): PricingPlan | undefined {
   return pricingPlans.find(plan => plan.id === planId);
 }
-
-export function getPlanLimits(planId: string): number {
-  const plan = getPlanById(planId);
-  return plan?.analysisLimit || 0;
-}
