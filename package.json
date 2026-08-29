@@ -38,6 +38,8 @@
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
-    "prisma": "^7.2.0"
+    "@vitest/ui": "^4.1.11",
+    "prisma": "^7.2.0",
+    "vitest": "^4.1.11"
   }
 }
