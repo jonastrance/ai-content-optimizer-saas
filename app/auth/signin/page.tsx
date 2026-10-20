@@ -4,22 +4,33 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Sparkles } from 'lucide-react';
+import { signIn } from 'next-auth/react';
 
 export default function SignInPage() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setError('');
 
-    // Simulate authentication
-    setTimeout(() => {
-      setIsLoading(false);
+    const result = await signIn('credentials', {
+      email,
+      password,
+      redirect: false,
+    });
+
+    setIsLoading(false);
+
+    if (result?.error) {
+      setError('Invalid email or password');
+    } else {
       router.push('/dashboard');
-    }, 1000);
+    }
   };
 
   return (
@@ -38,6 +49,11 @@ export default function SignInPage() {
         {/* Sign In Form */}
         <div className="bg-white rounded-lg shadow-sm border p-8">
           <form onSubmit={handleSubmit} className="space-y-6">
+            {error && (
+              <div className="p-3 bg-red-50 text-red-700 text-sm rounded-lg border border-red-200">
+                {error}
+              </div>
+            )}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                 Email address
