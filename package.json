@@ -14,6 +14,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@prisma/client": "^5.22.0",
     "@stripe/stripe-js": "^8.6.0",
     "@tailwindcss/postcss": "^4.1.18",
     "@types/node": "^25.0.3",
@@ -38,6 +39,7 @@
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
-    "prisma": "^7.2.0"
+    "prisma": "^5.22.0",
+    "vitest": "^1.6.0"
   }
 }

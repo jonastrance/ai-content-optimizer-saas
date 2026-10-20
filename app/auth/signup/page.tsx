@@ -14,16 +14,37 @@ function SignUpForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setError('');
 
-    // Simulate registration
-    setTimeout(() => {
+    try {
+      const res = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+        }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || 'Failed to register');
+      }
+
+      router.push('/auth/signin?registered=true');
+    } catch (err: any) {
+      setError(err.message || 'An error occurred during registration');
+    } finally {
       setIsLoading(false);
-      router.push('/dashboard');
-    }, 1000);
+    }
   };
 
   const planFeatures = {
@@ -39,6 +60,11 @@ function SignUpForm() {
         <h2 className="text-2xl font-bold text-gray-900 mb-6">Create your account</h2>
         
         <form onSubmit={handleSubmit} className="space-y-6">
+          {error && (
+            <div className="p-3 text-sm text-red-500 bg-red-50 border border-red-200 rounded-lg">
+              {error}
+            </div>
+          )}
           <div>
             <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
               Full name
