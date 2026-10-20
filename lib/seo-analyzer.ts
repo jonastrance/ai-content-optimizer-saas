@@ -83,10 +83,39 @@ function countWords(text: string): number {
 }
 
 function calculateReadabilityScore(text: string): number {
-  // Simplified Flesch Reading Ease score
-  const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0).length;
-  const words = countWords(text);
-  const syllables = estimateSyllables(text);
+  const match = text.match(/[^.!?]+/g);
+  let sentences = 0;
+  if (match) {
+    for (let i = 0; i < match.length; i++) {
+      if (match[i].trim().length > 0) sentences++;
+    }
+  }
+
+  const rawTokens = text.toLowerCase().split(/\s+/);
+  let syllables = 0;
+  let words = 0;
+
+  for (let i = 0; i < rawTokens.length; i++) {
+    const word = rawTokens[i];
+
+    let lowerWord = word.replace(/[^a-z]/g, '');
+    if (lowerWord.length <= 3) {
+      syllables += 1;
+    } else {
+      const vowels = lowerWord.match(/[aeiouy]+/g);
+      if (!vowels) {
+        syllables += 1;
+      } else {
+        let count = vowels.length;
+        if (lowerWord.endsWith('e')) count--;
+        syllables += Math.max(1, count);
+      }
+    }
+
+    if (word.length > 0) {
+      words++;
+    }
+  }
 
   if (sentences === 0 || words === 0) return 0;
 
@@ -96,32 +125,6 @@ function calculateReadabilityScore(text: string): number {
   const score = 206.835 - 1.015 * avgSentenceLength - 84.6 * avgSyllablesPerWord;
   
   return Math.max(0, Math.min(100, score));
-}
-
-function estimateSyllables(text: string): number {
-  const words = text.toLowerCase().split(/\s+/);
-  let syllableCount = 0;
-
-  for (const word of words) {
-    syllableCount += countSyllablesInWord(word);
-  }
-
-  return syllableCount;
-}
-
-function countSyllablesInWord(word: string): number {
-  word = word.toLowerCase().replace(/[^a-z]/g, '');
-  if (word.length <= 3) return 1;
-
-  const vowels = word.match(/[aeiouy]+/g);
-  if (!vowels) return 1;
-
-  let count = vowels.length;
-  
-  // Subtract silent e
-  if (word.endsWith('e')) count--;
-  
-  return Math.max(1, count);
 }
 
 function calculateKeywordDensity(content: string, keyword: string): number {
