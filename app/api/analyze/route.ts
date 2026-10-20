@@ -1,9 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { getToken } from 'next-auth/jwt';
 import { analyzeSEO } from '@/lib/seo-analyzer';
 import { getAIContentSuggestions } from '@/lib/openai-service';
 
 export async function POST(request: NextRequest) {
   try {
+    const token = await getToken({ req: request, secret: process.env.AUTH_SECRET });
+    if (!token) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      );
+    }
+
     const body = await request.json();
     const { content, targetKeyword } = body;
 
