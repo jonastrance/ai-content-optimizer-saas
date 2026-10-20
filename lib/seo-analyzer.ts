@@ -109,11 +109,14 @@ function estimateSyllables(text: string): number {
   return syllableCount;
 }
 
+const NON_ALPHA_REGEX = /[^a-z]/g;
+const VOWEL_REGEX = /[aeiouy]+/g;
+
 function countSyllablesInWord(word: string): number {
-  word = word.toLowerCase().replace(/[^a-z]/g, '');
+  word = word.toLowerCase().replace(NON_ALPHA_REGEX, '');
   if (word.length <= 3) return 1;
 
-  const vowels = word.match(/[aeiouy]+/g);
+  const vowels = word.match(VOWEL_REGEX);
   if (!vowels) return 1;
 
   let count = vowels.length;
