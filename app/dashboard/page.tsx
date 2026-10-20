@@ -31,6 +31,18 @@ interface AnalysisResult {
   };
 }
 
+const ScoreBar = ({ score }: { score: number }) => (
+  <div className="w-full bg-gray-200 rounded-full h-2">
+    <div
+      className={`h-2 rounded-full ${
+        score >= 80 ? 'bg-green-500' :
+        score >= 60 ? 'bg-yellow-500' : 'bg-red-500'
+      }`}
+      style={{ width: `${Math.min(100, score)}%` }}
+    ></div>
+  </div>
+);
+
 export default function DashboardPage() {
   const [content, setContent] = useState('');
   const [targetKeyword, setTargetKeyword] = useState('');
@@ -235,15 +247,7 @@ export default function DashboardPage() {
                           {analysis.seoScore}
                         </span>
                       </div>
-                      <div className="w-full bg-gray-200 rounded-full h-2">
-                        <div
-                          className={`h-2 rounded-full ${
-                            analysis.seoScore >= 80 ? 'bg-green-500' :
-                            analysis.seoScore >= 60 ? 'bg-yellow-500' : 'bg-red-500'
-                          }`}
-                          style={{ width: `${analysis.seoScore}%` }}
-                        ></div>
-                      </div>
+                      <ScoreBar score={analysis.seoScore} />
                     </div>
 
                     {/* Readability Score */}
@@ -254,15 +258,7 @@ export default function DashboardPage() {
                           {Math.round(analysis.readabilityScore)}
                         </span>
                       </div>
-                      <div className="w-full bg-gray-200 rounded-full h-2">
-                        <div
-                          className={`h-2 rounded-full ${
-                            analysis.readabilityScore >= 80 ? 'bg-green-500' :
-                            analysis.readabilityScore >= 60 ? 'bg-yellow-500' : 'bg-red-500'
-                          }`}
-                          style={{ width: `${Math.min(100, analysis.readabilityScore)}%` }}
-                        ></div>
-                      </div>
+                      <ScoreBar score={analysis.readabilityScore} />
                     </div>
 
                     {/* Keyword Density */}
