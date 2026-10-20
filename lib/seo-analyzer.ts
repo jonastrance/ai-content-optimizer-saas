@@ -12,8 +12,8 @@ export interface SEOAnalysis {
 
 export function analyzeSEO(content: string, targetKeyword?: string): SEOAnalysis {
   const wordCount = countWords(content);
-  const readabilityScore = calculateReadabilityScore(content);
-  const keywordDensity = targetKeyword ? calculateKeywordDensity(content, targetKeyword) : 0;
+  const readabilityScore = calculateReadabilityScore(content, wordCount);
+  const keywordDensity = targetKeyword ? calculateKeywordDensity(content, targetKeyword, wordCount) : 0;
   
   const suggestions: string[] = [];
   const issues: string[] = [];
@@ -82,10 +82,9 @@ function countWords(text: string): number {
   return text.trim().split(/\s+/).filter(word => word.length > 0).length;
 }
 
-function calculateReadabilityScore(text: string): number {
+function calculateReadabilityScore(text: string, words: number): number {
   // Simplified Flesch Reading Ease score
   const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0).length;
-  const words = countWords(text);
   const syllables = estimateSyllables(text);
 
   if (sentences === 0 || words === 0) return 0;
@@ -124,8 +123,7 @@ function countSyllablesInWord(word: string): number {
   return Math.max(1, count);
 }
 
-function calculateKeywordDensity(content: string, keyword: string): number {
-  const words = countWords(content);
+function calculateKeywordDensity(content: string, keyword: string, words: number): number {
   if (words === 0) return 0;
 
   const keywordRegex = new RegExp(keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
