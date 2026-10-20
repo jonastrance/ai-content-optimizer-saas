@@ -85,25 +85,27 @@ function countWords(text: string): number {
 function calculateReadabilityScore(text: string): number {
   // Simplified Flesch Reading Ease score
   const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0).length;
-  const words = countWords(text);
-  const syllables = estimateSyllables(text);
 
-  if (sentences === 0 || words === 0) return 0;
+  const wordsArray = text.trim().split(/\s+/).filter(word => word.length > 0);
+  const wordsCount = wordsArray.length;
 
-  const avgSentenceLength = words / sentences;
-  const avgSyllablesPerWord = syllables / words;
+  const syllables = estimateSyllables(wordsArray);
+
+  if (sentences === 0 || wordsCount === 0) return 0;
+
+  const avgSentenceLength = wordsCount / sentences;
+  const avgSyllablesPerWord = syllables / wordsCount;
 
   const score = 206.835 - 1.015 * avgSentenceLength - 84.6 * avgSyllablesPerWord;
   
   return Math.max(0, Math.min(100, score));
 }
 
-function estimateSyllables(text: string): number {
-  const words = text.toLowerCase().split(/\s+/);
+function estimateSyllables(words: string[]): number {
   let syllableCount = 0;
 
   for (const word of words) {
-    syllableCount += countSyllablesInWord(word);
+    syllableCount += countSyllablesInWord(word.toLowerCase());
   }
 
   return syllableCount;
