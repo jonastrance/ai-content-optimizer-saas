@@ -4,6 +4,7 @@
   "description": "AI-powered content optimization platform for SEO and marketing teams",
   "main": "index.js",
   "scripts": {
+    "test": "vitest run",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -38,6 +39,9 @@
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
-    "prisma": "^7.2.0"
+    "@vitest/coverage-v8": "^5.0.5",
+    "prisma": "^7.2.0",
+    "vitest": "^5.0.5",
+    "vitest-mock-extended": "^5.1.1"
   }
 }
